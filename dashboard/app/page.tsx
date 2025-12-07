@@ -17,9 +17,15 @@ import {
   BellOutlined,
   SettingOutlined,
   LogoutOutlined,
-  SafetyCertificateOutlined as Shield
+  SafetyCertificateOutlined as Shield,
+  RobotOutlined,
+  AimOutlined,
+  ThunderboltOutlined,
+  GatewayOutlined,
+  CheckCircleFilled,
+  LockOutlined
 } from '@ant-design/icons';
-import { Space, Table, Tag, Button, Avatar, Dropdown, theme } from 'antd';
+import { Space, Table, Tag, Button, Avatar, Dropdown, theme, Badge, Progress } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
 const { Divider } = StatisticCard;
@@ -183,87 +189,118 @@ export default function Dashboard() {
             </ProCard>
           </ProCard.Group>
 
-          <ProCard.Group title={<span style={{ color: '#d9d9d9', fontWeight: 'bold' }}>ROBOTİK VE OTONOM SİSTEMLER</span>} direction="row" gutter={16} style={{ marginBottom: 24 }} ghost>
-            <ProCard style={{ background: '#141414', border: '1px solid #303030' }} colSpan={6}>
-              <StatisticCard
-                statistic={{
-                  title: <span style={{ color: '#8c8c8c' }}>DEVRIYE MODÜLÜ</span>,
-                  value: 'AKTİF',
-                  valueStyle: { color: '#52c41a' },
-                  icon: <RobotOutlined style={{ color: '#52c41a', fontSize: 24 }} />,
-                  description: (
-                    <div style={{ marginTop: 8 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12 }}>
-                        <span>PatrolBot-01</span> <Badge status="processing" color="green" text={<span style={{ color: '#73d13d' }}>Devriyede</span>} />
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12, marginTop: 4 }}>
-                        <span>PatrolBot-02</span> <Badge status="success" color="green" text={<span style={{ color: '#73d13d' }}>Şarjda (%85)</span>} />
-                      </div>
-                    </div>
-                  )
-                }}
-              />
+          <ProCard.Group title={<span style={{ color: '#d9d9d9', fontWeight: 'bold', fontSize: 18, borderLeft: '4px solid #52c41a', paddingLeft: 12 }}>ROBOTİK VE OTONOM SİSTEMLER (İHA/İKU)</span>} direction="row" gutter={16} style={{ marginBottom: 24 }} ghost>
+            {/* Patrol Bot Card */}
+            <ProCard style={{ background: '#141414', border: '1px solid #303030', padding: 0, overflow: 'hidden' }} bodyStyle={{ padding: 0 }} colSpan={6}>
+              <div style={{ position: 'relative', height: 160, width: '100%' }}>
+                <img src="/assets/patrol_bot.png" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.8)' }} />
+                <div style={{ position: 'absolute', top: 10, right: 10 }}>
+                  <Tag color="#52c41a" style={{ border: 'none', fontWeight: 'bold', boxShadow: '0 0 10px rgba(82, 196, 26, 0.5)' }}>AKTİF</Tag>
+                </div>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'linear-gradient(to top, #141414, transparent)', padding: '20px 10px 10px' }}>
+                  <span style={{ color: '#fff', fontWeight: 'bold', fontSize: 16, textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>DEVRİYE TİMİ</span>
+                </div>
+              </div>
+              <div style={{ padding: 16 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <span style={{ color: '#8c8c8c' }}>PatrolBot-01</span>
+                  <span style={{ color: '#52c41a' }}>● Devriyede</span>
+                </div>
+                <Progress percent={85} size="small" strokeColor="#52c41a" trailColor="#303030" showInfo={false} />
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, marginTop: 12 }}>
+                  <span style={{ color: '#8c8c8c' }}>PatrolBot-02</span>
+                  <span style={{ color: '#faad14' }}>⚡ Şarjda</span>
+                </div>
+                <Progress percent={34} size="small" strokeColor="#faad14" trailColor="#303030" showInfo={false} />
+
+                <div style={{ marginTop: 12, fontSize: 10, color: '#595959', display: 'flex', gap: 8 }}>
+                  <Tag color="default" style={{ background: '#1f1f1f', border: '1px solid #303030' }}>SİLAH: GÜVENLİ</Tag>
+                  <Tag color="default" style={{ background: '#1f1f1f', border: '1px solid #303030' }}>KAMERA: REC</Tag>
+                </div>
+              </div>
             </ProCard>
 
-            <ProCard style={{ background: '#141414', border: '1px solid #303030' }} colSpan={6}>
-              <StatisticCard
-                statistic={{
-                  title: <span style={{ color: '#8c8c8c' }}>SALDIRI TİMİ (K9)</span>,
-                  value: 'BEKLEMEDE',
-                  valueStyle: { color: '#faad14' },
-                  icon: <AimOutlined style={{ color: '#faad14', fontSize: 24 }} />,
-                  description: (
-                    <div style={{ marginTop: 8 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12 }}>
-                        <span>DogBot Alpha</span> <span style={{ color: '#faad14' }}>Standby</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12, marginTop: 4 }}>
-                        <span>DogBot Beta</span> <span style={{ color: '#faad14' }}>Standby</span>
-                      </div>
-                    </div>
-                  )
-                }}
-              />
+            {/* Dog Bot Card */}
+            <ProCard style={{ background: '#141414', border: '1px solid #303030', padding: 0, overflow: 'hidden' }} bodyStyle={{ padding: 0 }} colSpan={6}>
+              <div style={{ position: 'relative', height: 160, width: '100%' }}>
+                <img src="/assets/dog_bot.png" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'sepia(20%) hue-rotate(320deg) saturate(140%) brightness(0.7)' }} />
+                <div style={{ position: 'absolute', top: 10, right: 10 }}>
+                  <Tag color="#faad14" style={{ border: 'none', fontWeight: 'bold', boxShadow: '0 0 10px rgba(250, 173, 20, 0.3)' }}>HAZIR KITA</Tag>
+                </div>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'linear-gradient(to top, #141414, transparent)', padding: '20px 10px 10px' }}>
+                  <span style={{ color: '#fff', fontWeight: 'bold', fontSize: 16, textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>K9 SALDIRI BİRİMİ</span>
+                </div>
+              </div>
+              <div style={{ padding: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                  <AimOutlined style={{ fontSize: 20, color: '#ff4d4f' }} />
+                  <span style={{ color: '#d9d9d9', fontSize: 12 }}>HEDEF: YOK</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#8c8c8c', fontSize: 12, borderTop: '1px solid #303030', paddingTop: 8 }}>
+                  <span>Alpha Birimi</span>
+                  <span style={{ color: '#52c41a' }}>100% OPR</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#8c8c8c', fontSize: 12, marginTop: 4 }}>
+                  <span>Beta Birimi</span>
+                  <span style={{ color: '#52c41a' }}>100% OPR</span>
+                </div>
+                <div style={{ marginTop: 12, fontSize: 10, color: '#595959' }}>
+                  <Tag color="default" style={{ background: '#1f1f1f', border: '1px solid #303030' }}>NEURAL LINK: ONLINE</Tag>
+                </div>
+              </div>
             </ProCard>
 
-            <ProCard style={{ background: '#141414', border: '1px solid #303030' }} colSpan={6}>
-              <StatisticCard
-                statistic={{
-                  title: <span style={{ color: '#8c8c8c' }}>HAVA SAHASI</span>,
-                  value: 'TARANIYOR',
-                  valueStyle: { color: '#13c2c2' },
-                  icon: <ThunderboltOutlined style={{ color: '#13c2c2', fontSize: 24 }} />,
-                  description: (
-                    <div style={{ marginTop: 8 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12 }}>
-                        <span>Drone Swarm</span> <span>İrtifa: 150m</span>
-                      </div>
-                      <Progress percent={92} size="small" strokeColor="#13c2c2" trailColor="#303030" showInfo={false} />
-                    </div>
-                  )
-                }}
-              />
+            {/* Drone Swarm Card */}
+            <ProCard style={{ background: '#141414', border: '1px solid #303030', padding: 0, overflow: 'hidden' }} bodyStyle={{ padding: 0 }} colSpan={6}>
+              <div style={{ position: 'relative', height: 160, width: '100%' }}>
+                <img src="/assets/drone_swarm.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', top: 10, right: 10 }}>
+                  <Tag color="#13c2c2" style={{ border: 'none', fontWeight: 'bold', boxShadow: '0 0 10px rgba(19, 194, 194, 0.5)' }}>HAVADAYIZ</Tag>
+                </div>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'linear-gradient(to top, #141414, transparent)', padding: '20px 10px 10px' }}>
+                  <span style={{ color: '#fff', fontWeight: 'bold', fontSize: 16, textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>HAVA SAHASI (SWARM)</span>
+                </div>
+              </div>
+              <div style={{ padding: 16 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+                  <span style={{ color: '#8c8c8c' }}>SİLÜET TESPİTİ</span>
+                  <span style={{ color: '#13c2c2' }}>2 HEDEF</span>
+                </div>
+                <Progress percent={100} success={{ percent: 98 }} showInfo={false} strokeColor="#13c2c2" trailColor="#303030" size="small" />
+                <div style={{ marginTop: 10, display: 'flex', gap: 5 }}>
+                  <Tag color="#1f1f1f" style={{ border: '1px solid #303030', color: '#8c8c8c' }}>Alt: 150m</Tag>
+                  <Tag color="#1f1f1f" style={{ border: '1px solid #303030', color: '#8c8c8c' }}>Vis: NVG</Tag>
+                </div>
+                <div style={{ marginTop: 8, fontSize: 10, color: '#434343' }}>WIND: 12 KM/H // THERMAL: ON</div>
+              </div>
             </ProCard>
 
-            <ProCard style={{ background: '#141414', border: '1px solid #303030' }} colSpan={6}>
-              <StatisticCard
-                statistic={{
-                  title: <span style={{ color: '#8c8c8c' }}>OTONOM KAPILAR</span>,
-                  value: 'KİLİTLİ',
-                  valueStyle: { color: '#52c41a' },
-                  icon: <GatewayOutlined style={{ color: '#52c41a', fontSize: 24 }} />,
-                  description: (
-                    <div style={{ marginTop: 8 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12 }}>
-                        <span>Ana Kapı</span> <CheckCircleFilled style={{ color: '#52c41a' }} />
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#d9d9d9', fontSize: 12, marginTop: 4 }}>
-                        <span>Sektör C</span> <CheckCircleFilled style={{ color: '#52c41a' }} />
-                      </div>
-                    </div>
-                  )
-                }}
-              />
+            {/* Autonomous Gates Card */}
+            <ProCard style={{ background: '#141414', border: '1px solid #303030', padding: 0, overflow: 'hidden' }} bodyStyle={{ padding: 0 }} colSpan={6}>
+              <div style={{ position: 'relative', height: 160, width: '100%' }}>
+                <img src="/assets/smart_gate.png" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.2)' }} />
+                <div style={{ position: 'absolute', top: 10, right: 10 }}>
+                  <Tag color="#f5222d" style={{ border: 'none', fontWeight: 'bold', boxShadow: '0 0 10px rgba(245, 34, 45, 0.4)' }}>KİLİTLİ</Tag>
+                </div>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'linear-gradient(to top, #141414, transparent)', padding: '20px 10px 10px' }}>
+                  <span style={{ color: '#fff', fontWeight: 'bold', fontSize: 16, textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>OTONOM KAPI AĞI</span>
+                </div>
+              </div>
+              <div style={{ padding: 16 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <span style={{ color: '#d9d9d9' }}><LockOutlined /> ANA GİRİŞ</span>
+                  <CheckCircleFilled style={{ color: '#52c41a' }} />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <span style={{ color: '#d9d9d9' }}><LockOutlined /> PERSONEL KAPISI</span>
+                  <CheckCircleFilled style={{ color: '#52c41a' }} />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#d9d9d9' }}><LockOutlined /> SEVKİYAT</span>
+                  <CheckCircleFilled style={{ color: '#52c41a' }} />
+                </div>
+              </div>
             </ProCard>
           </ProCard.Group>
 
