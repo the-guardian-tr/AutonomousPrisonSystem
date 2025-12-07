@@ -1,16 +1,16 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 222.2 84% 4.9%;
+  --background: 222.2 84% 2%;
   --foreground: 210 40% 98%;
   --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
+  --primary: 190 100% 50%;
+  /* Cyan Neon */
   --primary-foreground: 222.2 47.4% 11.2%;
   --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
@@ -18,36 +18,191 @@
   --muted-foreground: 215 20.2% 65.1%;
   --accent: 217.2 32.6% 17.5%;
   --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
+  --destructive: 0 100% 50%;
   --destructive-foreground: 210 40% 98%;
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
-  --radius: 0.5rem;
+  --ring: 190 100% 50%;
+  --radius: 0.2rem;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: rgba(6, 182, 212, 0.2);
   }
+
   body {
-    @apply bg-background text-foreground;
-    background-image: 
-        radial-gradient(circle at 50% 50%, rgba(20, 30, 60, 0.4) 0%, transparent 50%),
-        linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-    background-size: 100% 100%, 20px 20px, 20px 20px;
+    background-color: #000205;
+    color: #e2e8f0;
+    overflow: hidden;
+    perspective: 1500px;
+    /* 3D Perspective */
   }
 }
 
-.animate-pulse-slow {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* 3D Container Transform */
+.hud-container {
+  transform: rotateX(2deg) scale(0.98);
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
 }
 
-.text-glow {
-    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+/* Advanced Grid Background */
+.cyber-grid {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image:
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+  animation: grid-move 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
 }
 
-.border-glow {
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+@keyframes grid-move {
+  0% {
+    transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
+  }
+
+  100% {
+    transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px);
+  }
+}
+
+/* Holographic Card */
+.holo-card {
+  background: rgba(6, 182, 212, 0.02);
+  border: 1px solid rgba(6, 182, 212, 0.1);
+  backdrop-filter: blur(4px);
+  box-shadow:
+    0 0 15px rgba(6, 182, 212, 0.05),
+    inset 0 0 20px rgba(6, 182, 212, 0.05);
+  position: relative;
+  clip-path: polygon(10px 0, 100% 0,
+      100% calc(100% - 10px), calc(100% - 10px) 100%,
+      0 100%, 0 10px);
+}
+
+.holo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(0deg,
+      transparent 0px,
+      rgba(6, 182, 212, 0.03) 1px,
+      transparent 2px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Glitch Text Effect */
+.glitch {
+  position: relative;
+  color: #fff;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -1px 0 #00fff9;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(13px, 9999px, 81px, 0);
+  }
+
+  20% {
+    clip: rect(68px, 9999px, 2px, 0);
+  }
+
+  40% {
+    clip: rect(2px, 9999px, 17px, 0);
+  }
+
+  60% {
+    clip: rect(43px, 9999px, 86px, 0);
+  }
+
+  80% {
+    clip: rect(10px, 9999px, 45px, 0);
+  }
+
+  100% {
+    clip: rect(62px, 9999px, 14px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(59px, 9999px, 22px, 0);
+  }
+
+  20% {
+    clip: rect(18px, 9999px, 3px, 0);
+  }
+
+  40% {
+    clip: rect(35px, 9999px, 92px, 0);
+  }
+
+  60% {
+    clip: rect(98px, 9999px, 47px, 0);
+  }
+
+  80% {
+    clip: rect(5px, 9999px, 26px, 0);
+  }
+
+  100% {
+    clip: rect(31px, 9999px, 69px, 0);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #06b6d4;
+}
+
+.crt-overlay {
+  background: radial-gradient(circle, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 100%);
+  background-size: 100% 2px;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9998;
 }
