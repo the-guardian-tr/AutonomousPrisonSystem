@@ -3,206 +3,172 @@
 @tailwind utilities;
 
 :root {
-  --background: 222.2 84% 2%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 190 100% 50%;
-  /* Cyan Neon */
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 100% 50%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 190 100% 50%;
-  --radius: 0.2rem;
+  --background: 200 50% 3%;
+  --foreground: 180 100% 90%;
+
+  --primary: 180 100% 50%;
+  /* Cyan */
+  --secondary: 280 100% 60%;
+  /* Purple */
+  --alert: 0 100% 60%;
+  /* Red */
+  --success: 120 100% 50%;
+  /* Green */
+
+  --glass-border: rgba(6, 182, 212, 0.3);
+  --glass-bg: rgba(6, 182, 212, 0.05);
 }
 
 @layer base {
-  * {
-    border-color: rgba(6, 182, 212, 0.2);
-  }
-
   body {
-    background-color: #000205;
-    color: #e2e8f0;
-    overflow: hidden;
-    perspective: 1500px;
-    /* 3D Perspective */
+    background-color: #000508;
+    color: hsl(var(--foreground));
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
   }
 }
 
-/* 3D Container Transform */
-.hud-container {
-  transform: rotateX(2deg) scale(0.98);
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
-}
+/* --- ARWES / SCI-FI UTILITIES --- */
 
-/* Advanced Grid Background */
-.cyber-grid {
+/* Grid Background */
+.sci-fi-grid {
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background-image:
-    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-  animation: grid-move 20s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes grid-move {
-  0% {
-    transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
-  }
-
-  100% {
-    transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px);
-  }
-}
-
-/* Holographic Card */
-.holo-card {
-  background: rgba(6, 182, 212, 0.02);
-  border: 1px solid rgba(6, 182, 212, 0.1);
-  backdrop-filter: blur(4px);
-  box-shadow:
-    0 0 15px rgba(6, 182, 212, 0.05),
-    inset 0 0 20px rgba(6, 182, 212, 0.05);
-  position: relative;
-  clip-path: polygon(10px 0, 100% 0,
-      100% calc(100% - 10px), calc(100% - 10px) 100%,
-      0 100%, 0 10px);
-}
-
-.holo-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(0deg,
-      transparent 0px,
-      rgba(6, 182, 212, 0.03) 1px,
-      transparent 2px);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Glitch Text Effect */
-.glitch {
-  position: relative;
-  color: #fff;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 }
 
-.glitch::before {
-  left: 2px;
-  text-shadow: -1px 0 #ff00c1;
-  clip: rect(44px, 450px, 56px, 0);
-  animation: glitch-anim 5s infinite linear alternate-reverse;
+/* Augmented Card (Clipped Corners) */
+.arwes-card {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
 
-.glitch::after {
-  left: -2px;
-  text-shadow: -1px 0 #00fff9;
-  clip: rect(44px, 450px, 56px, 0);
-  animation: glitch-anim2 5s infinite linear alternate-reverse;
+/* Using pseudo-elements for the borders to allow clip-path to work on bg but keep border visible */
+.arwes-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--glass-border);
+  clip-path: polygon(0 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-@keyframes glitch-anim {
+.arwes-card-content {
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(0 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.02) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Corner Accents */
+.arwes-card::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 20px;
+  height: 1px;
+  background: #06b6d4;
+  transform: rotate(-45deg);
+  transform-origin: right;
+  box-shadow: 0 0 10px #06b6d4;
+}
+
+/* Text Effects */
+.arwes-text {
+  text-shadow: 0 0 5px rgba(6, 182, 212, 0.5);
+  letter-spacing: 0.05em;
+}
+
+.arwes-title {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Animations */
+@keyframes scan {
   0% {
-    clip: rect(13px, 9999px, 81px, 0);
-  }
-
-  20% {
-    clip: rect(68px, 9999px, 2px, 0);
-  }
-
-  40% {
-    clip: rect(2px, 9999px, 17px, 0);
-  }
-
-  60% {
-    clip: rect(43px, 9999px, 86px, 0);
-  }
-
-  80% {
-    clip: rect(10px, 9999px, 45px, 0);
+    background-position: 0 0;
   }
 
   100% {
-    clip: rect(62px, 9999px, 14px, 0);
+    background-position: 0 100vh;
   }
 }
 
-@keyframes glitch-anim2 {
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes flicker {
   0% {
-    clip: rect(59px, 9999px, 22px, 0);
+    opacity: 0.9;
+  }
+
+  5% {
+    opacity: 0.8;
+  }
+
+  10% {
+    opacity: 0.95;
+  }
+
+  15% {
+    opacity: 0.6;
   }
 
   20% {
-    clip: rect(18px, 9999px, 3px, 0);
-  }
-
-  40% {
-    clip: rect(35px, 9999px, 92px, 0);
-  }
-
-  60% {
-    clip: rect(98px, 9999px, 47px, 0);
-  }
-
-  80% {
-    clip: rect(5px, 9999px, 26px, 0);
+    opacity: 1;
   }
 
   100% {
-    clip: rect(31px, 9999px, 69px, 0);
+    opacity: 1;
   }
+}
+
+.flicker {
+  animation: flicker 4s infinite;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #001;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #06b6d4;
-}
-
-.crt-overlay {
-  background: radial-gradient(circle, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 100%);
-  background-size: 100% 2px;
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9998;
+  border-radius: 0;
 }
