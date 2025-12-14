@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------
+  # BACKEND SERVICE (Go)
+  # ----------------------------------------
+  backend:
+    build: ./backend
+    container_name: prison_backend
+    ports:
+      - "8080:8080"
+    networks:
+      - prison_net
+    environment:
+      - APP_ENV=production
+
+  # ----------------------------------------
+  # DASHBOARD (Next.js)
+  # ----------------------------------------
+  dashboard:
+    build: ./dashboard
+    container_name: prison_dashboard
+    ports:
+      - "3000:3000"
+    networks:
+      - prison_net
+    depends_on:
+      - backend
+
+  # ----------------------------------------
+  # AI RISK ENGINE (Python)
+  # ----------------------------------------
+  ai_engine:
+    build: ./ai
+    container_name: prison_ai
+    networks:
+      - prison_net
+    volumes:
+      - ./ai:/app
+    command: python risk_engine.py
+
+networks:
+  prison_net:
+    driver: bridge
